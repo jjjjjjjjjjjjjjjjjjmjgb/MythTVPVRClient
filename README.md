@@ -2,39 +2,27 @@
 
 A Jellyfin plugin for integrating MythTV Live TV functionality with Jellyfin Server.
 
-## Status
-
-**Current State**: Build configuration ready - uses GitHub Actions to build the plugin automatically.
-
-## What's Included
-
-✅ **Plugin Structure**: Based on the official NextPVR plugin structure
-✅ **Configuration**: MythTV-specific configuration (Server IP, Port, API Key, etc.)
-✅ **Web UI**: Configuration page for MythTV settings
-✅ **Service Skeleton**: ILiveTvService implementation with TODO markers for MythTV API integration
-✅ **GitHub Actions**: Automated build workflow using the Jellyfin Plugin Repository Manager
-
-## Building
-
-This plugin is built automatically by GitHub Actions when you push to the main branch. The workflow uses the [Jellyfin Plugin Repository Manager](https://github.com/oddstr13/jellyfin-plugin-repository-manager) to compile the plugin.
-
-### Manual Build
-
-To build locally:
-
-```bash
-cd Jellyfin.Plugin.MythTV
-dotnet build --configuration Release
-```
-
 ## Installation
 
-### From GitHub Actions Artifacts
+### Option 1: Add Repository to Jellyfin (Recommended)
 
-1. Go to the "Actions" tab in this repository
+1. Open Jellyfin Dashboard
+2. Go to **Plugins** → **Repositories**
+3. Click **+** to add a new repository
+4. Enter this URL:
+   ```
+   https://raw.githubusercontent.com/jjjjjjjjjjjjjjjjjmjgb/MythTVPVRClient/main/manifest.json
+   ```
+5. Click **Save**
+6. Go to **Plugins** → **Catalog**
+7. Find "MythTV" in the list and click **Install**
+
+### Option 2: Manual Installation
+
+1. Go to the [Actions tab](https://github.com/jjjjjjjjjjjjjjjjjmjgb/MythTVPVRClient/actions)
 2. Click on the latest workflow run
 3. Download the artifact
-4. Extract the DLL
+4. Extract the ZIP file
 5. Place in your Jellyfin plugins directory:
    - Windows: `%ProgramData%\Jellyfin\Server\plugins\MythTV\`
    - Linux: `/var/lib/jellyfin/plugins/MythTV/`
