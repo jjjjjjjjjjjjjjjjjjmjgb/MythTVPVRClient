@@ -1,0 +1,21 @@
+[
+  {
+    "name": "MythTV",
+    "guid": "e1234567-89ab-cdef-0123-456789abcdef",
+    "description": "Provides live TV using MythTV as the backend.",
+    "overview": "Jellyfin plugin for MythTV Live TV integration",
+    "owner": "jjjjjjjjjjjjjjjjjjmjgb",
+    "category": "LiveTV",
+    "imageUrl": "",
+    "versions": [
+      {
+        "version": "1.0.0.0",
+        "changelog": "Initial release",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/jjjjjjjjjjjjjjjjjmjgb/MythTVPVRClient/releases/download/v1.0.0.0/Jellyfin.Plugin.MythTV_1.0.0.0.zip",
+        "checksum": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "timestamp": "2024-01-01T00:00:00Z"
+      }
+    ]
+  }
+]
