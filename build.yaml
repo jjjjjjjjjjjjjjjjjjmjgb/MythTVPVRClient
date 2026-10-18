@@ -1,0 +1,3 @@
+version: "1.0.0"
+targetAbi: "12.0.0.0"
+build: "Jellyfin.Plugin.MythTV/Jellyfin.Plugin.MythTV.csproj"

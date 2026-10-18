@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MythTV Configuration</title>
+</head>
+<body>
+    <div id="MythTVConfigPage" data-role="page" class="page type-interior pluginConfigurationPage">
+        <div data-role="content">
+            <div class="ui-primary-color">
+                <br />
+                <h1>MythTV Plugin Configuration</h1>
+            </div>
+            <form id="MythTVConfigForm">
+                <div class="inputContainer">
+                    <label class="inputLabel">Server IP</label>
+                    <input type="text" id="txtServerIp" name="ServerIp" required />
+                    <div class="inputDescription">MythTV backend IP address or hostname</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel">Server Port</label>
+                    <input type="number" id="txtServerPort" name="ServerPort" min="1" max="65535" required />
+                    <div class="inputDescription">MythTV API port (default: 6544)</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel">API Key</label>
+                    <input type="text" id="txtApiKey" name="ApiKey" />
+                    <div class="inputDescription">MythTV API security key (optional)</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel">Connection Timeout (seconds)</label>
+                    <input type="number" id="txtConnectionTimeout" name="ConnectionTimeoutSeconds" min="1" max="300" required />
+                    <div class="inputDescription">API request timeout in seconds</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel">Enable Debug Logging</label>
+                    <input type="checkbox" id="chkDebugLogging" name="EnableDebugLogging" />
+                    <div class="inputDescription">Enable verbose logging for troubleshooting</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel">Tuner Count</label>
+                    <input type="number" id="txtTunerCount" name="TunerCount" min="1" max="16" required />
+                    <div class="inputDescription">Number of tuners to simulate in Jellyfin</div>
+                </div>
+                <br />
+                <div>
+                    <button id="btnSave" type="button" class="fab block raised" data-icon="check">Save</button>
+                    <button id="btnTestConnection" type="button" class="fab block raised" data-icon="network">Test Connection</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var MythTVConfigPage = {
+            pluginUniqueId: 'e1234567-89ab-cdef-0123-456789abcdef',
+
+            loadConfiguration: function () {
+                var page = this;
+                ApiClient.getPluginConfiguration(page.pluginUniqueId).then(function (config) {
+                    $('#txtServerIp').val(config.ServerIp);
+                    $('#txtServerPort').val(config.ServerPort);
+                    $('#txtApiKey').val(config.ApiKey);
+                    $('#txtConnectionTimeout').val(config.ConnectionTimeoutSeconds);
+                    $('#chkDebugLogging').prop('checked', config.EnableDebugLogging);
+                    $('#txtTunerCount').val(config.TunerCount);
+                });
+            },
+
+            saveConfiguration: function () {
+                var page = this;
+                var config = {
+                    ServerIp: $('#txtServerIp').val(),
+                    ServerPort: parseInt($('#txtServerPort').val(), 10),
+                    ApiKey: $('#txtApiKey').val(),
+                    ConnectionTimeoutSeconds: parseInt($('#txtConnectionTimeout').val(), 10),
+                    EnableDebugLogging: $('#chkDebugLogging').prop('checked'),
+                    TunerCount: parseInt($('#txtTunerCount').val(), 10)
+                };
+
+                ApiClient.updatePluginConfiguration(page.pluginUniqueId, config).then(function () {
+                    Dashboard.alert('Configuration saved successfully');
+                });
+            },
+
+            testConnection: function () {
+                var page = this;
+                Dashboard.showLoadingMsg();
+                ApiClient.getJSON('https://localhost:8096/MythTV/TestConnection').then(function (result) {
+                    Dashboard.hideLoadingMsg();
+                    if (result.Success) {
+                        Dashboard.alert('Connection test successful!');
+                    } else {
+                        Dashboard.alert('Connection test failed: ' + result.ErrorMessage);
+                    }
+                }, function (error) {
+                    Dashboard.hideLoadingMsg();
+                    Dashboard.alert('Connection test failed: ' + error);
+                });
+            }
+        };
+
+        $(document).on('pageshow', '#MythTVConfigPage', function () {
+            MythTVConfigPage.loadConfiguration();
+        });
+
+        $('#btnSave').on('click', function () {
+            MythTVConfigPage.saveConfiguration();
+        });
+
+        $('#btnTestConnection').on('click', function () {
+            MythTVConfigPage.testConnection();
+        });
+    </script>
+</body>
+</html>
