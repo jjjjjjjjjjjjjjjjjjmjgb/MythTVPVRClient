@@ -6,18 +6,17 @@
     "overview": "Jellyfin plugin for MythTV Live TV integration",
     "owner": "jjjjjjjjjjjjjjjjjjmjgb",
     "category": "LiveTV",
-    "imageUrl": "",
+    "imageUrl": "https://githubusercontent.com",
     "versions": [
       {
         "version": "1.0.0.0",
-        "changelog": "Initial release framework with MythTV API structures.",
+        "changelog": "Initial release framework for Jellyfin 12.x.",
         "targetAbi": "12.0.0.0",
-        "sourceUrl": "https://github.com/jjjjjjjjjjjjjjjjjjmjgb/MythTVPVRClient",
+        "sourceUrl": "https://github.com",
         "checksum": "",
-        "timestamp": "2026-10-18T00:00:00Z",
-        "url": "https://github.com"
+        "timestamp": "2026-10-18T18:42:00Z",
+        "url": "https://github.com/releases/download/v1.0.0.0/Jellyfin.Plugin.MythTV.zip"
       }
     ]
   }
 ]
-
