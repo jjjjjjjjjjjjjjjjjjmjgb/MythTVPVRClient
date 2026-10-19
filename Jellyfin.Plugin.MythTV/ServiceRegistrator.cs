@@ -1,6 +1,4 @@
 using System;
-using Jellyfin.Plugin.MythTV.Configuration;
-using MediaBrowser.Common.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jellyfin.Plugin.MythTV;
@@ -8,10 +6,12 @@ namespace Jellyfin.Plugin.MythTV;
 /// <summary>
 /// Class ServiceRegistrator.
 /// </summary>
-public class ServiceRegistrator : IPluginServiceRegistrator
+public class ServiceRegistrator
 {
-    /// <inheritdoc />
-    public void RegisterServices(IServiceCollection serviceCollection, IServerConfigurationManager serverConfigurationManager)
+    /// <summary>
+    /// Register plugin services
+    /// </summary>
+    public static void RegisterServices(IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<LiveTvService>();
     }

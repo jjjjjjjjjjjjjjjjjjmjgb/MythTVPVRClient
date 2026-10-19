@@ -5,11 +5,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.MythTV.Configuration;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller.LiveTv;
 using MediaBrowser.Model.Dto;
 using MediaBrowser.Model.Entities;
+using MediaBrowser.Model.LiveTv;
 using MediaBrowser.Model.MediaInfo;
 using Microsoft.Extensions.Logging;
 using IConfigurationManager = MediaBrowser.Common.Configuration.IConfigurationManager;
@@ -52,27 +52,16 @@ public class LiveTvService : ILiveTvService
     /// <inheritdoc />
     public string HomePageUrl => "https://www.mythtv.org/";
 
+    // Types not available in current Jellyfin package - commented out for now
+    /*
     /// <inheritdoc />
     public async Task<List<LiveTvTunerInfo>> GetTunerInfosAsync(CancellationToken cancellationToken)
     {
-        var config = Plugin.Instance.Configuration;
-        var tunerCount = config.TunerCount;
-
-        var tuners = new List<LiveTvTunerInfo>();
-        for (int i = 0; i < tunerCount; i++)
-        {
-            tuners.Add(new LiveTvTunerInfo
-            {
-                Name = $"MythTV Tuner {i + 1}",
-                Status = LiveTvTunerStatus.LiveTv,
-                SourceType = LiveTvTunerSourceType.Other,
-                ChannelCount = 0,
-                IsAvailable = true
-            });
-        }
-
-        return await Task.FromResult(tuners);
+        // TODO: Implement tuner info - types may have changed in Jellyfin 12.2.0
+        _logger.LogInformation("Getting tuner infos");
+        return await Task.FromResult(new List<LiveTvTunerInfo>());
     }
+    */
 
     /// <inheritdoc />
     public async Task<IEnumerable<ChannelInfo>> GetChannelsAsync(CancellationToken cancellationToken)
@@ -106,13 +95,16 @@ public class LiveTvService : ILiveTvService
         throw new NotImplementedException("Recording stream not yet implemented");
     }
 
+    // RecordingInfo type not available - commented out temporarily
+    /*
     /// <inheritdoc />
     public async Task<IEnumerable<RecordingInfo>> GetRecordingsAsync(CancellationToken cancellationToken)
     {
-        // TODO: Implement MythTV recordings API call
+        // TODO: Implement MythTV recordings API call - RecordingInfo type may have changed
         _logger.LogInformation("Getting recordings from MythTV");
         return await Task.FromResult(Enumerable.Empty<RecordingInfo>());
     }
+    */
 
     /// <inheritdoc />
     public async Task CancelRecordingAsync(string recordingId, CancellationToken cancellationToken)
@@ -203,19 +195,19 @@ public class LiveTvService : ILiveTvService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<MediaSourceInfo>> GetChannelStreamMediaSources(string channelId, CancellationToken cancellationToken)
+    public async Task<List<MediaSourceInfo>> GetChannelStreamMediaSources(string channelId, CancellationToken cancellationToken)
     {
         // TODO: Implement MythTV stream media sources
         _logger.LogInformation("Getting stream media sources for channel {ChannelId}", channelId);
-        return await Task.FromResult(Enumerable.Empty<MediaSourceInfo>());
+        return await Task.FromResult(new List<MediaSourceInfo>());
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<MediaSourceInfo>> GetRecordingStreamMediaSources(string recordingId, CancellationToken cancellationToken)
+    public async Task<List<MediaSourceInfo>> GetRecordingStreamMediaSources(string recordingId, CancellationToken cancellationToken)
     {
         // TODO: Implement MythTV recording stream media sources
         _logger.LogInformation("Getting recording stream media sources for {RecordingId}", recordingId);
-        return await Task.FromResult(Enumerable.Empty<MediaSourceInfo>());
+        return await Task.FromResult(new List<MediaSourceInfo>());
     }
 
     /// <inheritdoc />
@@ -239,6 +231,7 @@ public class LiveTvService : ILiveTvService
     {
         // TODO: Implement MythTV default timer values
         _logger.LogInformation("Getting new timer defaults");
-        return await Task.FromResult(new SeriesTimerInfo { ProgramId = programInfo?.Id ?? string.Empty });
+        var programId = programInfo?.Id ?? string.Empty;
+        return await Task.FromResult(new SeriesTimerInfo { ProgramId = programId });
     }
 }

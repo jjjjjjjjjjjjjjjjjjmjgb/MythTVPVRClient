@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Jellyfin.Controller" Version="12.*-*" />
     <PackageReference Include="Jellyfin.Extensions" Version="12.*-*" />
+    <PackageReference Include="Jellyfin.Model" Version="12.*-*" />
   </ItemGroup>
 
 </Project>
